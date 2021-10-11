@@ -11,7 +11,7 @@ class Router {
     private $dispatcher;
 
     public function __construct() {
-        $this->routes = require __DIR__ . '/routes.php';
+        $this->routes = require __DIR__ . '/routes.inc.php';
     }
 
 
