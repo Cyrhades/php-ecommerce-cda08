@@ -16,7 +16,7 @@ class Register  {
                     $error = 'Veuillez remplir tous les champs.';
                 } 
                 elseif(!is_string($_POST['firstname']) || strlen($_POST['firstname']) > 60 ||
-                       !is_string($_POST['firstname']) || strlen($_POST['lastname']) > 60) {
+                       !is_string($_POST['lastname']) || strlen($_POST['lastname']) > 60) {
                     $error = 'La longueur maximum autorisé pour vos nom / prénom est de 60 caractères';
                 } 
                 elseif(!is_string($_POST['email']) || !filter_var($_POST['email'] , FILTER_VALIDATE_EMAIL)) {
