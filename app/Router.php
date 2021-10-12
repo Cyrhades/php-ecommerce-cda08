@@ -26,9 +26,9 @@ class Router {
         if (false !== $pos = strpos($uri, '?')) {
             $uri = substr($uri, 0, $pos);
         }
-        $uri = rawurldecode($uri);
-
-        $routeInfo = $this->dispatcher->dispatch($httpMethod, $uri);
+        define('ROUTE', rawurldecode($uri));
+        
+        $routeInfo = $this->dispatcher->dispatch($httpMethod, ROUTE);
         switch ($routeInfo[0]) {
             case FastRoute\Dispatcher::NOT_FOUND:
                 // ... 404 Not Found
