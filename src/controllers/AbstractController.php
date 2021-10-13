@@ -25,4 +25,9 @@ abstract class AbstractController  {
             $this->redirectTo('/');
         }
     }
+
+    public function flash() 
+    {
+        return new \Berlioz\FlashBag\FlashBag();
+    }
 }

@@ -30,10 +30,10 @@ class Authenticated extends AbstractController {
                     $error = 'Votre mot de passe est incorrect';
                 }
                 else {
+                    session_regenerate_id(true);
                     $user->password = null;
                     $_SESSION['user'] = $user;
-                    $flashBag = new \Berlioz\FlashBag\FlashBag;
-                    $flashBag->add(\Berlioz\FlashBag\FlashBag::TYPE_SUCCESS, 'Vous êtes maintenant connecté');
+                    $this->flash()->add(\Berlioz\FlashBag\FlashBag::TYPE_SUCCESS, 'Vous êtes maintenant connecté');
                     $this->redirectTo('/');
                 }
             }
@@ -47,9 +47,9 @@ class Authenticated extends AbstractController {
 
     public function disconnect() {  
         unset($_SESSION['user']);
+        session_regenerate_id(true);
         
-        $flashBag = new \Berlioz\FlashBag\FlashBag;
-        $flashBag->add(\Berlioz\FlashBag\FlashBag::TYPE_ERROR, 'Vous êtes maintenant déconnecté');
+        $this->flash()->add(\Berlioz\FlashBag\FlashBag::TYPE_ERROR, 'Vous êtes maintenant déconnecté');
         $this->redirectTo('/');
     }
 }

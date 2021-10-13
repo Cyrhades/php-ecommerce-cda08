@@ -33,8 +33,7 @@ class Register extends AbstractController {
                 } else {
                     $user->add($_POST['firstname'], $_POST['lastname'], $_POST['email'], password_hash($_POST['password'], PASSWORD_ARGON2I));
    
-                    $flashBag = new \Berlioz\FlashBag\FlashBag;
-                    $flashBag->add(\Berlioz\FlashBag\FlashBag::TYPE_SUCCESS, 'Vous êtes maintenant inscrit');
+                    $this->flash()->add(\Berlioz\FlashBag\FlashBag::TYPE_SUCCESS, 'Vous êtes maintenant inscrit');
                     $this->redirectTo('/');
                 }
             }

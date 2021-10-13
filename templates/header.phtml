@@ -40,8 +40,8 @@
                 foreach ($messages as $message) : 
     ?>
         <div class="container mt-4">
-            <div class="alert alert-<?= $type == \Berlioz\FlashBag\FlashBag::TYPE_ERROR ? 'danger' : $type ; ?>">
-                <?= $message; ?>
+            <div class="alert alert-<?= $type == \Berlioz\FlashBag\FlashBag::TYPE_ERROR ? 'danger' : htmlspecialchars($type) ; ?>">
+                <?= htmlspecialchars($message); ?>
             </div>
         </div>
     <?php
@@ -52,6 +52,6 @@
 
     <?php if(isset($_SESSION['user'])) : ?>
         <div class="container">
-            Bienvenue <?= $_SESSION['user']->firstname; ?>
+            Bienvenue <?= htmlspecialchars($_SESSION['user']->firstname); ?>
         </div>
     <?php endif; ?>
