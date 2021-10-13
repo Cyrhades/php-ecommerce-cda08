@@ -6,4 +6,8 @@ return function(FastRoute\RouteCollector $r) {
 
     $r->addRoute('GET', '/inscription', 'App\\Controllers\\Register::index');
     $r->addRoute('POST', '/inscription', 'App\\Controllers\\Register::form');
+
+
+    $r->addRoute('GET', '/connexion', 'App\\Controllers\\Authenticated::index');
+    $r->addRoute('POST', '/connexion', 'App\\Controllers\\Authenticated::form');
 };

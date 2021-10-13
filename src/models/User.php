@@ -14,4 +14,11 @@ class User extends AbstractRepository {
         $query->execute([$email]);
         return $query->fetch() ? true : false;
     }
+    
+    public function findByEmail($email) {
+        $query = $this->db->prepare("SELECT * FROM users WHERE email = ?");
+        $query->execute([$email]);
+        return $query->fetch();
+    }
+
 }
