@@ -4,14 +4,15 @@ namespace App\Controllers;
 
 use App\Models\User;
 
-class Register  {
+class Register extends AbstractController {
     
     public function index() {
-        include DIR_TEMPLATES.'/register.phtml';
+        $this->redirectIfConnected();
+        $this->render('register');
     }
 
     public function form() {
-      
+        $this->redirectIfConnected();
         if(\sizeof($_POST)) {
             // Vérification (minimaliste des données)
             if(empty($_POST['firstname']) || empty($_POST['lastname']) || empty($_POST['email']) || empty($_POST['password'])) {
@@ -32,14 +33,12 @@ class Register  {
                 } else {
                     $user->add($_POST['firstname'], $_POST['lastname'], $_POST['email'], password_hash($_POST['password'], PASSWORD_ARGON2I));
                     // @todo Ajouter flashbag
-                    header('location:/');
-                    exit();
+                    $this->redirectTo('/');
                 }
             }
         } else {
-            $error = 'Le formulaire n\'pas été soumis correctement.';
+            $error = 'Le formulaire n\'a pas été soumis correctement.';
         }
-        
-        include DIR_TEMPLATES.'/register.phtml';
+        $this->render('register', ['error' => $error]);
     }
 }

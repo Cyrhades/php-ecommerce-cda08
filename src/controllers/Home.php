@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-class Home {
+class Home extends AbstractController {
     
     public function index() {
-        include DIR_TEMPLATES.'/index.phtml';
+        $this->render('index');
     }
 }

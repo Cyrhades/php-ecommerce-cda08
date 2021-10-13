@@ -4,14 +4,15 @@ namespace App\Controllers;
 
 use App\Models\User;
 
-class Authenticated  {
+class Authenticated extends AbstractController {
     
-    public function index() {        
-        include DIR_TEMPLATES.'/authenticated.phtml';
+    public function index() {  
+        $this->redirectIfConnected();
+        $this->render('authenticated');
     }
 
     public function form() {
-       
+        $this->redirectIfConnected();
         if(\sizeof($_POST)) {
             if(empty($_POST['email']) || !is_string($_POST['email']) || !filter_var($_POST['email'] , FILTER_VALIDATE_EMAIL)) {
                 $error = 'Votre adresse email n\'est pas correcte';
@@ -31,8 +32,7 @@ class Authenticated  {
                 else {
                     $user->password = null;
                     $_SESSION['user'] = $user;
-                    header('Location: /');
-                    exit();
+                    $this->redirectTo('/');
                 }
             }
             
@@ -40,6 +40,11 @@ class Authenticated  {
             $error = 'Un probleme est survenu';
         }
         
-        include DIR_TEMPLATES.'/authenticated.phtml';
+        $this->render('authenticated', ['error' => $error]);
+    }
+
+    public function disconnect() {  
+        unset($_SESSION['user']);
+        $this->redirectTo('/');
     }
 }

@@ -10,4 +10,5 @@ return function(FastRoute\RouteCollector $r) {
 
     $r->addRoute('GET', '/connexion', 'App\\Controllers\\Authenticated::index');
     $r->addRoute('POST', '/connexion', 'App\\Controllers\\Authenticated::form');
+    $r->addRoute('GET', '/deconnexion', 'App\\Controllers\\Authenticated::disconnect');
 };
