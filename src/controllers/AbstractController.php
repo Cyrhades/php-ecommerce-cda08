@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use \Berlioz\FlashBag\FlashBag;
 
 abstract class AbstractController  {
 

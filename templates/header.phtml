@@ -34,6 +34,22 @@
         </div>
     </nav>
 
+    <?php 
+        if(isset($flash) && is_array($flash) && sizeof($flash) > 0) : 
+            foreach ($flash as $type => $messages) : 
+                foreach ($messages as $message) : 
+    ?>
+        <div class="container mt-4">
+            <div class="alert alert-<?= $type == \Berlioz\FlashBag\FlashBag::TYPE_ERROR ? 'danger' : $type ; ?>">
+                <?= $message; ?>
+            </div>
+        </div>
+    <?php
+                endforeach; 
+            endforeach; 
+        endif; 
+    ?>
+
     <?php if(isset($_SESSION['user'])) : ?>
         <div class="container">
             Bienvenue <?= $_SESSION['user']->firstname; ?>

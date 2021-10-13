@@ -32,6 +32,8 @@ class Authenticated extends AbstractController {
                 else {
                     $user->password = null;
                     $_SESSION['user'] = $user;
+                    $flashBag = new \Berlioz\FlashBag\FlashBag;
+                    $flashBag->add(\Berlioz\FlashBag\FlashBag::TYPE_SUCCESS, 'Vous êtes maintenant connecté');
                     $this->redirectTo('/');
                 }
             }
@@ -45,6 +47,9 @@ class Authenticated extends AbstractController {
 
     public function disconnect() {  
         unset($_SESSION['user']);
+        
+        $flashBag = new \Berlioz\FlashBag\FlashBag;
+        $flashBag->add(\Berlioz\FlashBag\FlashBag::TYPE_ERROR, 'Vous êtes maintenant déconnecté');
         $this->redirectTo('/');
     }
 }
