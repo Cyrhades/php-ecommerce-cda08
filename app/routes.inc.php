@@ -21,8 +21,12 @@ return function(FastRoute\RouteCollector $r) {
 
  
     $r->addRoute('GET', '/admin/user', 'App\\Controllers\\AdminUser::index');
+
     $r->addRoute('GET', '/admin/user/add', 'App\\Controllers\\AdminUser::printFormAdd');
     $r->addRoute('POST', '/admin/user/add', 'App\\Controllers\\AdminUser::processFormAdd');
+
     $r->addRoute('GET', '/admin/user/edit/{id:\d+}', 'App\\Controllers\\AdminUser::printFormEdit');
     $r->addRoute('POST', '/admin/user/edit/{id:\d+}', 'App\\Controllers\\AdminUser::processFormEdit');
+
+    $r->addRoute('GET', '/admin/user/delete/{id:\d+}', 'App\\Controllers\\AdminUser::delete');
 };

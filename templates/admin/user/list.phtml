@@ -3,8 +3,41 @@
     <section>
         <h1>Gestion des utilisateurs</h1>
     </section>
-    <div class="d-flex justify-content-end">
+    <div class="d-flex justify-content-end mb-4">
         <a href="/admin/user/add"><button class="btn btn-primary">Ajouter un utilisateur</button></a>
     </div>
+    <?php if(isset($users) && is_array($users) && sizeof($users) > 0): ?>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" style="width:1%;">#</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Rôles</th>
+                    <th scope="col" style="width:1%;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                 <?php foreach($users as $user): ?>
+                    <tr>
+                        <th scope="row"><?= (int) $user->id; ?></th>
+                        <td><?= htmlspecialchars($user->lastname.' '.$user->firstname); ?></td>
+                        <td><?= htmlspecialchars($user->email); ?></td>
+                        <td><?= htmlspecialchars(implode(', ',json_decode($user->roles))); ?></td>
+                        <td nowrap="nowrap">
+                            <a href="/admin/user/edit/<?= (int) $user->id; ?>">
+                                <button class="btn btn-primary"><i class="fas fa-edit"></i></button>
+                            </a>
+                            <a class="confirm_delete" href="/admin/user/delete/<?= (int) $user->id; ?>">
+                                <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php else: ?>
+            <div class="alert alert-warning mt-4">Aucun utilisateur n'a été trouvé.</div>
+    <?php endif; ?>
 </div>
 <?php include dirname(__FILE__,2).'/footer.phtml'; ?>

@@ -9,6 +9,13 @@ class User extends AbstractRepository {
         $query->execute([$firstname, $lastname, $email, $password, json_encode($roles)]);
     }
 
+    public function getAll()
+    {
+        $query = $this->db->prepare("SELECT * FROM users");
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function emailExists($email) {
         $query = $this->db->prepare("SELECT * FROM users WHERE email = ?");
         $query->execute([$email]);
@@ -21,4 +28,9 @@ class User extends AbstractRepository {
         return $query->fetch();
     }
 
+    public function delete($id)
+    {
+        $query = $this->db->prepare("DELETE FROM users WHERE id = ?");
+        $query->execute([$id]);
+    }
 }
