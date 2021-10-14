@@ -7,15 +7,18 @@ use App\Models\Product;
 class AdminProduct extends AbstractController {
     
     public function index() {
+        $this->isAuthorized(['admin']);
         $this->render('admin/product/list');
     }
 
     public function add() {
+        $this->isAuthorized(['admin']);
         $this->render('admin/product/add');
     }
 
     public function form()
     {
+        $this->isAuthorized(['admin']);
         if(\sizeof($_POST)) {
             if(empty($_POST['title']) || empty($_POST['description']) || empty($_POST['price'])) {
                 $error = 'Veuillez remplir tous les champs obligatoires.';

@@ -31,11 +31,12 @@ class Router {
         $routeInfo = $this->dispatcher->dispatch($httpMethod, ROUTE);
         switch ($routeInfo[0]) {
             case FastRoute\Dispatcher::NOT_FOUND:
-                // ... 404 Not Found
+                (new  \App\Controllers\ErrorController)->error404();
                 break;
             case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
                 $allowedMethods = $routeInfo[1];
                 // ... 405 Method Not Allowed
+                (new  \App\Controllers\ErrorController)->error405();
                 break;
             case FastRoute\Dispatcher::FOUND:
                 $controller = explode('::',$routeInfo[1]);

@@ -1,0 +1,44 @@
+<?php include dirname(__FILE__,2).'/header.phtml'; ?>
+<div class="container">
+    <section class="col-6">
+        <h1>Créer un nouvel utilisateur</h1>
+        <?php if(isset($error)): ?>
+            <div class="alert alert-danger"><?= htmlspecialchars($error); ?></div>
+        <?php endif; ?>
+        <form method="post">
+            <div class="form-group">
+                <label for="firstname">Prénom</label>
+                <input type="text" class="form-control" maxlength="60" value="<?= htmlspecialchars($_POST['firstname']??'')?>" name="firstname" id="firstname"  aria-describedby="firstnameHelp" placeholder="Votre prénom" required>
+            </div>
+            <div class="form-group">
+                <label for="lastname">Nom</label>
+                <input type="text" class="form-control" maxlength="60" value="<?= htmlspecialchars($_POST['lastname']??'')?>"name="lastname" id="lastname"  aria-describedby="lastnameHelp" placeholder="Votre nom" required>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Adresse E-mail</label>
+                <input type="email" name="email" value="<?= htmlspecialchars($_POST['email']??'')?>" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Votre adresse email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Choisissez un mot de passe">
+            </div>
+
+            <div class="form-group">
+                <label>Droits</label>
+                <input type="checkbox" name="roles[]" value="user" class="form-control" id="role_user">
+                <label for="role_user">Utilisateur</label>
+
+                <input type="checkbox" name="roles[]" value="marketing" class="form-control" id="role_marketing">
+                <label for="role_marketing">Marketing</label>
+
+                <input type="checkbox" name="roles[]" value="webmaster" class="form-control" id="role_webmasteur">
+                <label for="role_webmasteur">Webmasteur</label>
+
+                <input type="checkbox" name="roles[]" value="admin" class="form-control" id="role_admin">
+                <label for="role_admin">Administrateur</label>
+            </div>
+            <button type="submit" class="btn btn-primary">S'inscrire</button>
+        </form> 
+    </section>
+</div>
+<?php include dirname(__FILE__,2).'/footer.phtml'; ?>

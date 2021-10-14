@@ -5,7 +5,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `lastname` varchar(60) NOT NULL,
   `email` varchar(125) NOT NULL,
   `password` varchar(160) NOT NULL,
+  `roles` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '[]' CHECK (json_valid(`roles`)),
   `date` datetime NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 COMMIT;
