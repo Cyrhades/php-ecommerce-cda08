@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration E-commerce</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+
+            <a class="navbar-brand" href="/">Administration</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">                                  
+                    <li class="nav-item<?= ROUTE == '/admin/product' ? ' active' : ''; ?>">
+                        <a class="nav-link" href="/admin/product">Produits</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <?php 
+        if(isset($flash) && is_array($flash) && sizeof($flash) > 0) : 
+            foreach ($flash as $type => $messages) : 
+                foreach ($messages as $message) : 
+    ?>
+        <div class="container mt-4">
+            <div class="alert alert-<?= $type == \Berlioz\FlashBag\FlashBag::TYPE_ERROR ? 'danger' : htmlspecialchars($type) ; ?>">
+                <?= htmlspecialchars($message); ?>
+            </div>
+        </div>
+    <?php
+                endforeach; 
+            endforeach; 
+        endif; 
+    ?>
