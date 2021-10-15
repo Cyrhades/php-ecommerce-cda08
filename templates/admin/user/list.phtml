@@ -23,7 +23,15 @@
                         <th scope="row"><?= (int) $user->id; ?></th>
                         <td><?= htmlspecialchars($user->lastname.' '.$user->firstname); ?></td>
                         <td><?= htmlspecialchars($user->email); ?></td>
-                        <td><?= htmlspecialchars(implode(', ',json_decode($user->roles))); ?></td>
+                        <td>
+                            <?php 
+                                $roles = json_decode($user->roles);
+                                if(isset($roles) && is_array($roles) && sizeof($roles) > 0) :?>
+                                <?= htmlspecialchars(implode(', ',$roles)); ?>
+                            <?php else: ?>
+                                <span class="text-muted text-center text-small">Aucun rôle</span>
+                            <?php endif; ?>
+                        </td>
                         <td nowrap="nowrap">
                             <a href="/admin/user/edit/<?= (int) $user->id; ?>">
                                 <button class="btn btn-primary"><i class="fas fa-edit"></i></button>

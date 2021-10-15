@@ -8,7 +8,8 @@ class AdminProduct extends AbstractController {
     
     public function index() {
         $this->isAuthorized(['admin']);
-        $this->render('admin/product/list');
+        $product = new Product();  
+        $this->render('admin/product/list', ['products' => $product->getAll()]);
     }
 
     public function add() {

@@ -6,5 +6,39 @@
     <div class="d-flex justify-content-end mb-4">
         <a href="/admin/product/add"><button class="btn btn-primary">Ajouter un produit</button></a>
     </div>
+
+    <?php if(isset($products) && is_array($products) && sizeof($products) > 0): ?>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col" style="width:1%;">#</th>
+                    <th scope="col">Designation</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Prix</th>
+                    <th scope="col" style="width:1%;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($products as $product): ?>
+                    <tr>
+                        <th scope="row"><?= (int) $product->id; ?></th>
+                        <td><?= htmlspecialchars($product->title); ?></td>
+                        <td><?= htmlspecialchars(substr($product->description, 0, 30)); ?>...</td>
+                        <td><?= number_format($product->price, 2, ',', ''); ?>€</td>
+                        <td nowrap="nowrap">
+                            <a href="/admin/product/edit/<?= (int) $product->id; ?>">
+                                <button class="btn btn-primary"><i class="fas fa-edit"></i></button>
+                            </a>
+                            <a class="confirm_delete" href="/admin/product/delete/<?= (int) $product->id; ?>">
+                                <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php else: ?>
+            <div class="alert alert-warning mt-4">Aucun produit n'a été trouvé.</div>
+    <?php endif; ?>
 </div>
 <?php include dirname(__FILE__,2).'/footer.phtml'; ?>
