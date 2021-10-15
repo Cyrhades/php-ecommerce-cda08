@@ -9,6 +9,11 @@ class User extends AbstractRepository {
         $query->execute([$firstname, $lastname, $email, $password, json_encode($roles)]);
     }
 
+    public function edit($id, $firstname, $lastname, $email, $password, $roles = ['user']) {
+        $query = $this->db->prepare("UPDATE users SET firstname=?, lastname=?, email=?, password=?, roles=? WHERE id=?"); 
+        $query->execute([$firstname, $lastname, $email, $password, json_encode($roles), $id]);
+    }
+
     public function getAll()
     {
         $query = $this->db->prepare("SELECT * FROM users");
@@ -22,6 +27,12 @@ class User extends AbstractRepository {
         return $query->fetch() ? true : false;
     }
     
+    public function findById($id) {
+        $query = $this->db->prepare("SELECT * FROM users WHERE id = ?");
+        $query->execute([$id]);
+        return $query->fetch();
+    }
+
     public function findByEmail($email) {
         $query = $this->db->prepare("SELECT * FROM users WHERE email = ?");
         $query->execute([$email]);

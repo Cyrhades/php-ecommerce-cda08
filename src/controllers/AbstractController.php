@@ -21,6 +21,7 @@ abstract class AbstractController  {
 
     public function render($template, $data = []): void
     {
+        $flash = $this->flash()->all();
         extract($data);
         include DIR_TEMPLATES.'/'.$template.'.phtml';
         exit();

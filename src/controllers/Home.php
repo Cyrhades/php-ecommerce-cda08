@@ -6,6 +6,6 @@ namespace App\Controllers;
 class Home extends AbstractController {
     
     public function index() {
-        $this->render('index', ['flash' =>  $this->flash()->all()]);
+        $this->render('index');
     }
 }

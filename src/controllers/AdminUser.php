@@ -58,17 +58,26 @@ class AdminUser extends AbstractController {
         $this->render('admin/user/add', ['error' => $error]);
     }
 
-    public function printFormEdit() {
+    public function printFormEdit($id) {
         $this->isAuthorized(['admin']);
-        $this->render('admin/user/edit');
+        $userModel = new User();
+        $user = $userModel->findById((int) $id);
+
+        if($user !== false) {
+            $this->render('admin/user/edit', ['user' => $user]);
+        } else {
+            $this->redirectTo('/admin/user');
+        }
     }
 
-    public function processFormEdit() {
+    public function processFormEdit($id) {
         $this->isAuthorized(['admin']);
-        $this->isAuthorized(['admin']);
-        if(\sizeof($_POST)) {
+        $userModel = new User();
+        $user = $userModel->findById((int) $id);
+
+        if($user !== false && \sizeof($_POST)) {
             // Vérification (minimaliste des données)
-            if(empty($_POST['firstname']) || empty($_POST['lastname']) || empty($_POST['email']) || empty($_POST['password'])) {
+            if(empty($_POST['firstname']) || empty($_POST['lastname']) || empty($_POST['email'])) {
                 $error = 'Veuillez remplir tous les champs.';
             } 
             elseif(!is_string($_POST['firstname']) || strlen($_POST['firstname']) > 60 ||
@@ -86,14 +95,22 @@ class AdminUser extends AbstractController {
                 }
             } 
             else {
-                $user = new User();
                 // Vérification (doublon)
-                if($user->emailExists($_POST['email'])) {
+                if($_POST['email'] !== $user->email && $user->emailExists($_POST['email'])) {
                     $error = 'Cette adresse email est déjà utilisée.';
                 } else {
-                    $user->add($_POST['firstname'], $_POST['lastname'], $_POST['email'], password_hash($_POST['password'], PASSWORD_ARGON2I), $_POST['roles']);
+                    $userModel->edit(
+                        $user->id,
+                        $_POST['firstname'], 
+                        $_POST['lastname'], 
+                        $_POST['email'], 
+                        !empty($_POST['password']) 
+                            ? password_hash($_POST['password'], PASSWORD_ARGON2I)
+                            : $user->password, 
+                        $_POST['roles']
+                    );
    
-                    $this->flash()->add(\Berlioz\FlashBag\FlashBag::TYPE_SUCCESS, 'Vous êtes maintenant inscrit');
+                    $this->flash()->add(\Berlioz\FlashBag\FlashBag::TYPE_SUCCESS, "l'utilisateur a été modifié");
                     $this->redirectTo('/admin/user');
                 }
             }
